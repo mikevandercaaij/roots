@@ -1,0 +1,107 @@
+<div class="container my-4" *ngIf="event">
+  <div class="row d-flex justify-content-center align-items-center">
+    <div class="col-sm-12 col-md-8">
+      <div class="card shadow-lg">
+        <div class="card-body p-5">
+          <!-- Back button -->
+          <a class="back-button" routerLink="..">
+            <i class="bi bi-arrow-left"></i>
+          </a>
+          <div class="timeline-icon">
+            <div class="timeline-icon-content">
+              <span class="timeline-icon-content-day">
+                {{ this.day }}<br>
+              </span>
+              <span class="timeline-icon-content-month-year">
+                {{ this.month }}
+                {{ this.year }}
+              </span>
+            </div>
+          </div>
+          <div class="archive" *ngIf="!event.isActive">
+            <i class="bi bi-folder2-open"></i>
+          </div>
+          <br /><br />
+          <!-- Event details -->
+          <h1>
+            {{ event.title }}
+          </h1>
+          <i>{{ event.description }}</i>
+          <br /><br />
+          <quill-view-html
+            class="p-0"
+            [content]="event.content"
+          ></quill-view-html>
+          <br />
+          <mat-chip-grid #chipGrid aria-label="Tag selection">
+            <mat-chip-row *ngFor="let tag of tags">
+              {{ tag.name }}
+            </mat-chip-row>
+          </mat-chip-grid>
+          <br />
+          <div class="detail-links">
+            <!-- Edit button -->
+            <a class="link-detail" routerLink="./edit">Bewerken</a>
+            |
+            <!-- Archive buttons -->
+            <a
+              *ngIf="event.isActive"
+              class="link-detail"
+              (click)="archiveModal(contentArchive)"
+            >
+              Archiveren
+            </a>
+            <a
+              *ngIf="!event.isActive"
+              class="link-detail"
+              (click)="archiveModal(contentArchive)"
+            >
+              Dearchiveren
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Archive modal -->
+<ng-template #contentArchive let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-event-archive">
+      {{ event.isActive ? 'Archiveren' : 'Dearchiveren' }}?
+    </h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <span
+      >Weet je zeker dat je de gebeurtenis <b>{{ this.event.title }}</b> wilt
+      {{ event.isActive ? 'archiveren' : 'dearchiveren' }}?</span
+    >
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-white" (click)="modal.dismiss()">
+      Annuleren
+    </button>
+    <button
+      *ngIf="event.isActive"
+      type="button"
+      class="btn"
+      (click)="archiveEvent()"
+    >
+      Archiveren
+    </button>
+    <button
+      *ngIf="!event.isActive"
+      type="button"
+      class="btn"
+      (click)="archiveEvent()"
+    >
+      Dearchiveren
+    </button>
+  </div>
+</ng-template>
