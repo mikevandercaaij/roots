@@ -11,6 +11,6 @@ export const environment = {
   EMAIL_HOST: 'smtp.sendgrid.net',
   EMAIL_USERNAME: 'apikey',
   EMAIL_API_KEY:
-    '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',
+    'insert_sendgrid_api_key',
   EMAIL_SENDINGEMAIL: 'roots.team.noreply@gmail.com',
 };
